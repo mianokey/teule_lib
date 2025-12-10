@@ -19,7 +19,7 @@ class CreateBooksTable extends Migration
             $table->string('stock_alert', 1000)->default('0');
             $table->string('author', 1000);
             $table->text('description');
-            $table->string('ISBN', 255)->nullable();
+            $table->string('ISBN', 255)->nullable()->unique();
             $table->integer('category_id')->unsigned();
             $table->integer('overdue_price')->unsigned();
              $table->integer('lost_price')->unsigned();
