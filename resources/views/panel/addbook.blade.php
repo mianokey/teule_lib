@@ -70,7 +70,7 @@
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label">$ Overdue Price</label>
+                            <label class="control-label">Kes. Overdue Price</label>
                             <div class="controls">
                                 <input type="number" min="0"
                                     value="{{ isset($book) ? $book->overdue_price : '0' }}" id="overdue_price"
@@ -79,7 +79,7 @@
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label">$ Lost Price</label>
+                            <label class="control-label">Kes. Lost Price</label>
                             <div class="controls">
                                 <input type="number" min="0" value="{{ isset($book) ? $book->lost_price : '0' }}"
                                     id="lost_price" name="lost_price" class="span8">
