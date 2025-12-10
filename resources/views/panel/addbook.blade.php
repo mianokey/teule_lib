@@ -39,6 +39,16 @@
                             </div>
                         </div>
 
+                        
+                        <div class="control-group">
+                            <label class="control-label">ISBN NO.</label>
+                            <div class="controls">
+                                <input type="text" id="ISBN" name="ISBN"
+                                    value="{{ isset($book) ? $book->ISBN : '' }}"
+                                    placeholder="Enter the ISBN NO. for the book here..." class="span8">
+                            </div>
+                        </div>
+
                         <div class="control-group">
                             <label class="control-label" for="basicinput">Description of Book</label>
                             <div class="controls">

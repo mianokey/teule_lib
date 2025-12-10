@@ -22,7 +22,7 @@ class BooksController extends Controller
 	public function index()
 	{
 
-		$book_list = Books::select('book_id', 'title', 'author', 'description', 'book_categories.category')
+		$book_list = Books::select('book_id', 'title', 'author','ISBN', 'description', 'book_categories.category')
 			->join('book_categories', 'book_categories.id', '=', 'books.category_id')
 			->orderBy('book_id')->get();
 
@@ -53,6 +53,7 @@ class BooksController extends Controller
 		$validatedData = $request->validate([
 			'bookId' => 'nullable|integer|exists:books,book_id',
 			'title' => 'required|string',
+			'ISBN' => 'nullable|string',
 			'author' => 'required|string',
 			'description' => 'required|string',
 			'category_id' => 'required|integer',

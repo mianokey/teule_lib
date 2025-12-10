@@ -151,4 +151,5 @@ function clearform() {
     $('#description').val('');
     $('#number').val('');
     $('#category').val('');
+    $('#ISBN').val('');
 }

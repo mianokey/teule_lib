@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Books extends Model
 {
-    protected $fillable = array('book_id', 'title','stock_alert','author', 'category_id', 'description', 'added_by', 'overdue_price', 'lost_price');
+    protected $fillable = array('book_id', 'title','stock_alert','author', 'ISBN', 'category_id', 'description', 'added_by', 'overdue_price', 'lost_price');
 
     public $timestamps = false;
 
