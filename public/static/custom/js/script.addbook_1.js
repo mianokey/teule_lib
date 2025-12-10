@@ -1,4 +1,5 @@
 function loadResults() {
+    clearform();
 
     var url = "/books?category_id=" + $('#category_fill').val();
     // alert(url);
