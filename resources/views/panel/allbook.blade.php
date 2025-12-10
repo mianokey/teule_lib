@@ -27,6 +27,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Book Title</th>
+                                <th>ISBN</th>
                                 <th>Author</th>
                                 <th>Category</th>
                                 <th>Available</th>
