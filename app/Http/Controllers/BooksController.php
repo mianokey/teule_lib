@@ -48,51 +48,60 @@ class BooksController extends Controller
 
 
 
-	public function store(Request $request)
-	{
-		$validatedData = $request->validate([
-			'bookId' => 'nullable|integer|exists:books,book_id',
-			'title' => 'required|string',
-			'ISBN' => 'nullable|string',
-			'author' => 'required|string',
-			'description' => 'required|string',
-			'category_id' => 'required|integer',
-			'number' => 'required|integer|min:1',
-			'overdue_price' => 'required|integer|min:0',
-			'lost_price' => 'required|integer|min:0',
-		]);
+public function store(Request $request)
+{
+    $validatedData = $request->validate([
+        'bookId' => 'nullable|integer|exists:books,book_id',
+        'title' => 'required|string',
+        'ISBN' => [
+            'nullable',
+            'string',
+            // Unique in 'books' table, ignore the current book if updating
+            \Illuminate\Validation\Rule::unique('books', 'ISBN')->ignore($request->bookId, 'book_id')
+        ],
+        'author' => 'required|string',
+        'description' => 'required|string',
+        'category_id' => 'required|integer',
+        'number' => 'required|integer|min:1',
+        'overdue_price' => 'required|integer|min:0',
+        'lost_price' => 'required|integer|min:0',
+    ]);
 
-		try {
-			DB::beginTransaction();
+    try {
+        DB::beginTransaction();
 
-			// Create or update the book
-			$book = Books::updateOrCreate(['book_id' => $request->bookId], Arr::except($validatedData, ['number']));
+        // Create or update the book
+        $book = Books::updateOrCreate(
+            ['book_id' => $request->bookId],
+            Arr::except($validatedData, ['number'])
+        );
 
-			if (!$book) {
-				DB::rollBack();
-				return 'Failed to add book to the database';
-			}
+        if (!$book) {
+            DB::rollBack();
+            return 'Failed to add book to the database';
+        }
 
-			$number_of_issues = $request->input('number');
+        $number_of_issues = $request->input('number');
 
-			// Create issues for the book
-			for ($i = 0; $i < $number_of_issues; $i++) {
-				$issue = BookIssue::create(['book_id' => $book->book_id]);
+        // Create issues for the book
+        for ($i = 0; $i < $number_of_issues; $i++) {
+            $issue = BookIssue::create(['book_id' => $book->book_id]);
 
-				if (!$issue) {
-					DB::rollBack();
-					return 'Failed to create book issue';
-				}
-			}
+            if (!$issue) {
+                DB::rollBack();
+                return 'Failed to create book issue';
+            }
+        }
 
-			DB::commit();
+        DB::commit();
 
-			return 'Books added successfully to the database';
-		} catch (\Exception $e) {
-			DB::rollBack();
-			return 'Failed to add books to the database: ' . $e->getMessage();
-		}
-	}
+        return 'Books added successfully to the database';
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return 'Failed to add books to the database: ' . $e->getMessage();
+    }
+}
+
 
 
 	public function BookCategoryStore(Request $request)

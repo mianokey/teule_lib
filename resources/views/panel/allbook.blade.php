@@ -22,6 +22,7 @@
                             @endforeach
                         </select>
                     </div>
+                   
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -41,6 +42,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
             <input type="hidden" name="" id="categories_list" value="{{ json_encode($categories_list) }}">
